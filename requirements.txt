@@ -1,5 +1,6 @@
 # requirements.txt
 Flask==2.2.4
+flask_cors==3.0.10
 flasgger==0.9.4
 transformers==4.28.1
 tensorflow
