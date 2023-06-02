@@ -1,12 +1,11 @@
 from flask import Flask, request
-from flask_cors import CORS
 from flasgger import Swagger
 from transformers import pipeline
 
 app = Flask(__name__)
-CORS(app)
 swagger = Swagger(app)
 sentiment_pipeline = pipeline("sentiment-analysis")
+
 
 @app.route('/sentiment', methods=['POST'])
 def predict():
