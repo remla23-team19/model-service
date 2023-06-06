@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flasgger import Swagger
 from transformers import pipeline
 
@@ -51,7 +51,7 @@ def predict():
     """
     msg = request.get_json().get('msg')
     _sentiment = sentiment_pipeline(msg)
-    response = flask.jsonify({"sentiment": _sentiment[0]})
+    response = jsonify({"sentiment": _sentiment[0]})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
