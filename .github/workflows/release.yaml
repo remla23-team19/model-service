@@ -20,7 +20,7 @@ jobs:
           echo "version_patch=$PATCH" >> $GITHUB_ENV
 
       - name: Registry Login (ghcr.io)
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+        run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
       - name: Build and Push Docker Image
         run: |
           IMG=ghcr.io/${{ github.repository }}
