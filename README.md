@@ -1,30 +1,35 @@
 # Model Service 🔬
 [![Latest Tag](https://img.shields.io/github/tag/remla23-team19/model-service.svg)](https://github.com/remla23-team19/model-service/tags) [![Latest Commit](https://img.shields.io/github/last-commit/remla23-team19/model-service.svg)](https://github.com/remla23-team19/model-service/commits/main) [![Python Version](https://img.shields.io/badge/python-3.8-yellow.svg)](https://www.python.org/downloads/release/python-380/)
 
-Wrapper service for the ML model (see [model-training](https://github.com/remla23-team19/model-training)). The service is able to receive a text input and return the sentiment analysis of the text.
+Wrapper service for the ML model (see [model-training](https://github.com/remla23-team19/model-training)). The service is able to receive a text input and return the sentiment analysis of the text in the context of restaurant reviews.
 
 
 #### Example
 * Input, POST request to `/sentiment`:
 ```json
 {
-    "msg": "I am happy"
+    "msg": "Phenomenal food, service and ambiance."
+    "version": "1.0.0"
 }
 ```
 
-* Output, `JSON` containing a label and score (note: this is dummy data)
+Here, `msg` is the review to be analyzed and `version` is the version of the model to be used.
+The model version is optional, if not specified, the base version will be used.
+If the specified version is not available, the base version will be used.
+
+* Output, `JSON` containing a label for the sentiment:
 
 ```json
 {
     "sentiment": {
-        "label": "POSITIVE",
-        "score": 0.9999998807907104
+        "label": "POSITIVE"
     }
 }
 ```
 
 For the complete documentation, please visit `/apidocs` when running the service.
 If you want to connect to the frontend of this service, please visit [operation](https://github.com/remla23-team19/operation) to launch the complete project with all the components running together.
+If you want to play with the model without running the webservice, run `model_library.py` as main and you will be able to test the model with your own input (as configured at the bottom of the file).
 
 
 ## Instructions ⚙️
