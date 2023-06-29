@@ -1,0 +1,48 @@
+name: Code Quality
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3.3
+        with:
+          version: 1.5.1
+
+      - name: Dependencies
+        run: |
+          poetry env use python3.8
+          poetry install
+          poetry check
+
+      - name: PyLint
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run pylint app.py model_library.py --output-format=text:pylint.txt --fail-under=10.0
+
+      - name: Upload Results PyLint
+        uses: actions/upload-artifact@v3
+        with:
+          name: pylint-results
+          path: pylint.txt
+
+      - name: black
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run black --check .
+
+      - name: isort
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run isort --check-only .

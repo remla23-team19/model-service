@@ -1,3 +1,6 @@
+"""
+Web service on behalf of the sentiment analysis model.
+"""
 from flasgger import Swagger
 from flask import Flask, jsonify, request
 
@@ -51,15 +54,21 @@ def predict():
     """
     data = request.get_json()
     msg = data.get("msg")
-    version = data.get("version") if "version" in data and modellib.verify_version(data.get("version")) and data.get("version") in modellib.get_available_models() else "base"
+    version = (
+        data.get("version")
+        if "version" in data
+        and modellib.verify_version(data.get("version"))
+        and data.get("version") in modellib.get_available_models()
+        else "base"
+    )
 
     sentiment = modellib.predict_sentiment(msg, version)
-    response = jsonify({"sentiment": {
-        "label": modellib.PREDICTION_MAP[sentiment],
-        "score": 1.0
-    }})
+    response = jsonify(
+        {"sentiment": {"label": modellib.PREDICTION_MAP[sentiment], "score": 1.0}}
+    )
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
+
 
 @app.route("/versions", methods=["GET"])
 def get_available_versions():
